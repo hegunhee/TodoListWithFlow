@@ -1,4 +1,4 @@
-package com.hegunhee.todolistwithflow
+package com.hegunhee.todolistwithflow.ui
 
 sealed class Event(){
     object Uninitalized : Event()

@@ -1,17 +1,15 @@
-package com.hegunhee.todolistwithflow
+package com.hegunhee.todolistwithflow.ui
 
 import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.view.ViewGroup
 import android.widget.EditText
-import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
-import androidx.core.view.marginStart
+import com.hegunhee.todolistwithflow.R
 import com.hegunhee.todolistwithflow.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 

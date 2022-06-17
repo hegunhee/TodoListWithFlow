@@ -1,4 +1,4 @@
-package com.hegunhee.todolistwithflow
+package com.hegunhee.todolistwithflow.ui
 
 import android.view.LayoutInflater
 import android.view.View

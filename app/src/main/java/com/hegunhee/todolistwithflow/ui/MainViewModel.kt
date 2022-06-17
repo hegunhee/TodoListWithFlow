@@ -1,4 +1,4 @@
-package com.hegunhee.todolistwithflow
+package com.hegunhee.todolistwithflow.ui
 
 import androidx.lifecycle.*
 import com.hegunhee.todolistwithflow.data.MemoEntity
@@ -6,12 +6,10 @@ import com.hegunhee.todolistwithflow.domain.DeleteAllMemoUseCase
 import com.hegunhee.todolistwithflow.domain.DeleteMemoUseCase
 import com.hegunhee.todolistwithflow.domain.GetAllMemoFlowUseCase
 import com.hegunhee.todolistwithflow.domain.InsertMemoUseCase
-import com.hegunhee.todolistwithflow.model.DefaultRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -48,6 +46,13 @@ class MainViewModel @Inject constructor(
 
     fun deleteMemo(memo: MemoEntity) = viewModelScope.launch(Dispatchers.IO) {
         deleteMemoUseCase(memo)
+    }
+
+    suspend fun test(str : String)  {
+        val a = getAllMemoFlowUseCase().collect {
+            it.filter { it.text.contains(str) }
+        }
+
     }
 
 
