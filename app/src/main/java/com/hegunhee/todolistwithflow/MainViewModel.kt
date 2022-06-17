@@ -5,6 +5,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.hegunhee.todolistwithflow.data.MemoEntity
+import com.hegunhee.todolistwithflow.domain.DeleteAllMemoUseCase
+import com.hegunhee.todolistwithflow.domain.GetAllMemoFlowUseCase
+import com.hegunhee.todolistwithflow.domain.InsertMemoUseCase
 import com.hegunhee.todolistwithflow.model.DefaultRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -14,31 +17,34 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor(private val repository : DefaultRepository) : ViewModel(){
+class MainViewModel @Inject constructor(
+    private val getAllMemoFlowUseCase: GetAllMemoFlowUseCase,
+    private val insertMemoUseCase: InsertMemoUseCase,
+    private val deleteAllMemoUseCase: DeleteAllMemoUseCase
+    ) : ViewModel() {
 
-    val memoListLiveData : LiveData<List<MemoEntity>> = repository.getAllMemo().asLiveData()
+    val memoListLiveData: LiveData<List<MemoEntity>> = getAllMemoFlowUseCase().asLiveData()
 
     var testStr = "test"
-    fun insertMemo(){
+    fun insertMemo() {
         //아직까지는 테스트코드
         // 원래는 event를 해서 옵저버패턴으로 view에 넘겨줘야함
         viewModelScope.launch {
-            withContext(Dispatchers.IO){
-                repository.insertMemo(MemoEntity(testStr))
+            withContext(Dispatchers.IO) {
+                insertMemoUseCase(MemoEntity(testStr))
                 testStr += 1
             }
         }
 
     }
 
-    fun deleteAll(){
+    fun deleteAll() {
         viewModelScope.launch {
-            withContext(Dispatchers.IO){
-                repository.deleteAll()
+            withContext(Dispatchers.IO) {
+                deleteAllMemoUseCase()
             }
         }
     }
-
 
 
 }
