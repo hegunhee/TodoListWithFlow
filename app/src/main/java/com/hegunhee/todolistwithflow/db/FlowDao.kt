@@ -15,4 +15,7 @@ interface FlowDao{
 
     @Query("DELETE FROM MemoEntity")
     suspend fun deleteAll()
+
+    @Delete
+    suspend fun deleteMemo(memo : MemoEntity)
 }

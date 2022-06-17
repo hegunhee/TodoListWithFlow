@@ -19,4 +19,8 @@ class DefaultRepository(private val dao : FlowDao) : Repository{
         dao.deleteAll()
     }
 
+    override suspend fun deleteMamo(memo: MemoEntity) {
+        dao.deleteMemo(memo)
+    }
+
 }

@@ -10,4 +10,6 @@ interface Repository {
     suspend fun insertMemo(memo : MemoEntity)
 
     suspend fun deleteAll()
+
+    suspend fun deleteMamo(memo : MemoEntity)
 }
