@@ -4,6 +4,9 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity
-data class MemoEntity(@PrimaryKey val text : String) {
+data class MemoEntity(
+    @PrimaryKey val text : String,
+    val isCheck : Boolean
+    ) {
 
 }

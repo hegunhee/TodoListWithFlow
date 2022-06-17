@@ -33,31 +33,21 @@ class MainViewModel @Inject constructor(
         _event.postValue(Event.Clicked)
     }
 
-    fun insertMemo(text: String) {
-        //아직까지는 테스트코드
-        // 원래는 event를 해서 옵저버패턴으로 view에 넘겨줘야함
-        viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-                insertMemoUseCase(MemoEntity(text))
-            }
-        }
+    fun insertMemo(text: String) = viewModelScope.launch(Dispatchers.IO) {
+        insertMemoUseCase(MemoEntity(text, false))
 
     }
 
-    fun deleteAll() {
-        viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-                deleteAllMemoUseCase()
-            }
-        }
+    fun reverseCheckInsertMemo(memo: MemoEntity) = viewModelScope.launch(Dispatchers.IO) {
+        insertMemoUseCase(memo)
     }
 
-    fun deleteMemo(memo: MemoEntity) {
-        viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-                deleteMemoUseCase(memo)
-            }
-        }
+    fun deleteAll() = viewModelScope.launch(Dispatchers.IO) {
+        deleteAllMemoUseCase()
+    }
+
+    fun deleteMemo(memo: MemoEntity) = viewModelScope.launch(Dispatchers.IO) {
+        deleteMemoUseCase(memo)
     }
 
 
