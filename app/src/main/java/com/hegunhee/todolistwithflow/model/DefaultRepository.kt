@@ -11,8 +11,12 @@ class DefaultRepository(private val dao : FlowDao) : Repository{
         return dao.getAllMemo()
     }
 
-    override fun insertMemo(memo: MemoEntity) {
+    override suspend fun insertMemo(memo: MemoEntity) {
         dao.insertMemo(memo)
+    }
+
+    override suspend fun deleteAll() {
+        dao.deleteAll()
     }
 
 }

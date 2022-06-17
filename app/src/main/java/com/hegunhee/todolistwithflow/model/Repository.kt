@@ -7,5 +7,7 @@ interface Repository {
 
     fun getAllMemo() : Flow<List<MemoEntity>>
 
-    fun insertMemo(memo : MemoEntity)
+    suspend fun insertMemo(memo : MemoEntity)
+
+    suspend fun deleteAll()
 }

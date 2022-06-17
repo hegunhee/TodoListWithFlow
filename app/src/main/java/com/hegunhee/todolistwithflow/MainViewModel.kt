@@ -8,6 +8,7 @@ import com.hegunhee.todolistwithflow.data.MemoEntity
 import com.hegunhee.todolistwithflow.model.DefaultRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -28,6 +29,14 @@ class MainViewModel @Inject constructor(private val repository : DefaultReposito
             }
         }
 
+    }
+
+    fun deleteAll(){
+        viewModelScope.launch {
+            withContext(Dispatchers.IO){
+                repository.deleteAll()
+            }
+        }
     }
 
 
