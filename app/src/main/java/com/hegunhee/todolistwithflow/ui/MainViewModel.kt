@@ -1,14 +1,17 @@
 package com.hegunhee.todolistwithflow.ui
 
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Log
 import androidx.lifecycle.*
 import com.hegunhee.todolistwithflow.data.MemoEntity
-import com.hegunhee.todolistwithflow.domain.DeleteAllMemoUseCase
-import com.hegunhee.todolistwithflow.domain.DeleteMemoUseCase
-import com.hegunhee.todolistwithflow.domain.GetAllMemoFlowUseCase
-import com.hegunhee.todolistwithflow.domain.InsertMemoUseCase
+import com.hegunhee.todolistwithflow.domain.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -17,10 +20,21 @@ class MainViewModel @Inject constructor(
     private val getAllMemoFlowUseCase: GetAllMemoFlowUseCase,
     private val insertMemoUseCase: InsertMemoUseCase,
     private val deleteAllMemoUseCase: DeleteAllMemoUseCase,
-    private val deleteMemoUseCase: DeleteMemoUseCase
+    private val deleteMemoUseCase: DeleteMemoUseCase,
+    private val getAllMemoBySearchUseCase: GetAllMemoBySearchUseCase
 ) : ViewModel() {
 
-    val memoListLiveData: LiveData<List<MemoEntity>> = getAllMemoFlowUseCase().asLiveData()
+
+
+    private var _editTextLiveData: MutableLiveData<String> = MutableLiveData("")
+    val editTextLiveData: LiveData<String>
+        get() = _editTextLiveData
+
+    val memoListLiveData: LiveData<List<MemoEntity>> =
+        editTextLiveData.asFlow().combine(getAllMemoFlowUseCase()) { str, list ->
+            list.filter { it.text.contains(str) }
+        }.asLiveData()
+
 
     private var _event: MutableLiveData<Event> = MutableLiveData(Event.Uninitalized)
     val event: LiveData<Event>
@@ -48,11 +62,11 @@ class MainViewModel @Inject constructor(
         deleteMemoUseCase(memo)
     }
 
-    suspend fun test(str : String)  {
-        val a = getAllMemoFlowUseCase().collect {
-            it.filter { it.text.contains(str) }
-        }
 
+    fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+        val text = s.toString()
+        _editTextLiveData.postValue(text)
+        Log.d("ViewModelTest", s.toString())
     }
 
 

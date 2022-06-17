@@ -3,6 +3,7 @@ package com.hegunhee.todolistwithflow.ui
 import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.EditText
@@ -40,6 +41,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun initObserve() = with(viewModel) {
         memoListLiveData.observe(this@MainActivity) {
+            Log.d("invokeTest","ListObserving ${it.toString()}")
             adapter.setData(it)
         }
         event.observe(this@MainActivity) {

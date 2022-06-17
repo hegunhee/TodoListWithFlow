@@ -1,5 +1,6 @@
 package com.hegunhee.todolistwithflow.model
 
+import android.util.Log
 import com.hegunhee.todolistwithflow.data.MemoEntity
 import com.hegunhee.todolistwithflow.db.FlowDao
 import kotlinx.coroutines.flow.Flow
@@ -21,6 +22,11 @@ class DefaultRepository(private val dao : FlowDao) : Repository{
 
     override suspend fun deleteMamo(memo: MemoEntity) {
         dao.deleteMemo(memo)
+    }
+
+    override fun getAllMemoBySearch(searchText : String): Flow<List<MemoEntity>> {
+        Log.d("invokeTest","DefaultRepository")
+        return dao.getAllMemoBySearch(searchText)
     }
 
 }
