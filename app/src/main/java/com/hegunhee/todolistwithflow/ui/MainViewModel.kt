@@ -21,7 +21,6 @@ class MainViewModel @Inject constructor(
     private val insertMemoUseCase: InsertMemoUseCase,
     private val deleteAllMemoUseCase: DeleteAllMemoUseCase,
     private val deleteMemoUseCase: DeleteMemoUseCase,
-    private val getAllMemoBySearchUseCase: GetAllMemoBySearchUseCase
 ) : ViewModel() {
 
 
