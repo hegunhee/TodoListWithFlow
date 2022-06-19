@@ -5,4 +5,6 @@
 
 ## issues  
 asLiveData 확장함수가 안되는 이슈  
-https://github.com/hegunhee/TodoListWithFlow/issues/1
+https://github.com/hegunhee/TodoListWithFlow/issues/1  
+Flow Combine 사용  
+https://github.com/hegunhee/TodoListWithFlow/issues/2
