@@ -19,6 +19,4 @@ interface FlowDao{
     @Delete
     suspend fun deleteMemo(memo : MemoEntity)
 
-    @Query("SELECT * FROM MemoEntity WHERE text LIKE :text ")
-    fun getAllMemoBySearch(text : String) : Flow<List<MemoEntity>>
 }

@@ -26,7 +26,7 @@ class MainViewModel @Inject constructor(
 
 
     private var _editTextLiveData: MutableLiveData<String> = MutableLiveData("")
-    val editTextLiveData: LiveData<String>
+    private val editTextLiveData: LiveData<String>
         get() = _editTextLiveData
 
     val memoListLiveData: LiveData<List<MemoEntity>> =
@@ -63,9 +63,7 @@ class MainViewModel @Inject constructor(
 
 
     fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-        val text = s.toString()
-        _editTextLiveData.postValue(text)
-        Log.d("ViewModelTest", s.toString())
+        _editTextLiveData.postValue(s.toString())
     }
 
 

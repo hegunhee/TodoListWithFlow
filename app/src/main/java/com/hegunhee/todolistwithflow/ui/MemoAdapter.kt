@@ -31,13 +31,7 @@ class MemoAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MemoViewHolder {
-        return MemoViewHolder(
-            MemoItemBinding.inflate(
-                LayoutInflater.from(parent.context),
-                parent,
-                false
-            )
-        )
+        return MemoViewHolder(MemoItemBinding.inflate(LayoutInflater.from(parent.context), parent, false))
     }
 
     override fun onBindViewHolder(holder: MemoViewHolder, position: Int) {

@@ -24,9 +24,4 @@ class DefaultRepository(private val dao : FlowDao) : Repository{
         dao.deleteMemo(memo)
     }
 
-    override fun getAllMemoBySearch(searchText : String): Flow<List<MemoEntity>> {
-        Log.d("invokeTest","DefaultRepository")
-        return dao.getAllMemoBySearch(searchText)
-    }
-
 }

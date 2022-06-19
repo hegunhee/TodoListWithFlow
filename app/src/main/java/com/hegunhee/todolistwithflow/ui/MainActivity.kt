@@ -20,12 +20,8 @@ class MainActivity : AppCompatActivity() {
     private val binding: ActivityMainBinding by lazy { ActivityMainBinding.inflate(layoutInflater) }
     private val viewModel: MainViewModel by viewModels()
     private val adapter = MemoAdapter(listOf(),
-    deleteMemo = { memo ->
-        viewModel.deleteMemo(memo)
-    },
-        insertMemo = { memo ->
-            viewModel.reverseCheckInsertMemo(memo)
-        }
+        deleteMemo = { memo -> viewModel.deleteMemo(memo) },
+        insertMemo = { memo -> viewModel.reverseCheckInsertMemo(memo) }
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,16 +36,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initObserve() = with(viewModel) {
-        memoListLiveData.observe(this@MainActivity) {
-            Log.d("invokeTest","ListObserving ${it.toString()}")
-            adapter.setData(it)
-        }
+        memoListLiveData.observe(this@MainActivity) { adapter.setData(it) }
         event.observe(this@MainActivity) {
             when (it) {
                 Event.Uninitalized -> {}
-                Event.Clicked -> {
-                    addMemo()
-                }
+                Event.Clicked -> { addMemo() }
             }
         }
     }

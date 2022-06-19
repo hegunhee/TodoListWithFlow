@@ -13,5 +13,4 @@ interface Repository {
 
     suspend fun deleteMamo(memo : MemoEntity)
 
-    fun getAllMemoBySearch(searchText : String) : Flow<List<MemoEntity>>
 }
