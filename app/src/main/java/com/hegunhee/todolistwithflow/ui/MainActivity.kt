@@ -10,9 +10,12 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
+import androidx.lifecycle.lifecycleScope
 import com.hegunhee.todolistwithflow.R
 import com.hegunhee.todolistwithflow.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -37,10 +40,11 @@ class MainActivity : AppCompatActivity() {
 
     private fun initObserve() = with(viewModel) {
         memoListLiveData.observe(this@MainActivity) { adapter.setData(it) }
-        event.observe(this@MainActivity) {
-            when (it) {
-                Event.Uninitalized -> {}
-                Event.Clicked -> { addMemo() }
+        lifecycleScope.launchWhenStarted {
+            launch {
+                event.collect {
+                    addMemo()
+                }
             }
         }
     }

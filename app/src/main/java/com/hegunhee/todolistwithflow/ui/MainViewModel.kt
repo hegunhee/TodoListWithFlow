@@ -30,13 +30,12 @@ class MainViewModel @Inject constructor(
         }.asLiveData()
 
 
-    private var _event: MutableLiveData<Event> = MutableLiveData(Event.Uninitalized)
-    val event: LiveData<Event>
-        get() = _event
+    private var _event: MutableSharedFlow<Unit> = MutableSharedFlow()
+    val event: SharedFlow<Unit> = _event.asSharedFlow()
 
 
-    fun clickFloatingButton() {
-        _event.postValue(Event.Clicked)
+    fun clickFloatingButton() = viewModelScope.launch{
+        _event.emit(Unit)
     }
 
     fun insertMemo(text: String) = viewModelScope.launch(Dispatchers.IO) {
