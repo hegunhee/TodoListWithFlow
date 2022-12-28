@@ -1,8 +1,5 @@
 package com.hegunhee.todolistwithflow.ui
 
-import android.text.Editable
-import android.text.TextWatcher
-import android.util.Log
 import androidx.lifecycle.*
 import com.hegunhee.todolistwithflow.data.MemoEntity
 import com.hegunhee.todolistwithflow.domain.*
@@ -24,10 +21,10 @@ class MainViewModel @Inject constructor(
 
     val editTextLiveData: MutableStateFlow<String> = MutableStateFlow<String>("")
 
-    val memoListLiveData: LiveData<List<MemoEntity>> =
+    val memoListLiveData: Flow<List<MemoEntity>> =
         editTextLiveData.combine(getAllMemoFlowUseCase()) { str, list ->
             list.filter { it.text.contains(str) }
-        }.asLiveData()
+        }.distinctUntilChanged()
 
 
     private var _event: MutableSharedFlow<Unit> = MutableSharedFlow()

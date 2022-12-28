@@ -39,11 +39,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initObserve() = with(viewModel) {
-        memoListLiveData.observe(this@MainActivity) { adapter.setData(it) }
         lifecycleScope.launchWhenStarted {
             launch {
                 event.collect {
                     addMemo()
+                }
+            }
+            launch {
+                memoListLiveData.collect {
+                    adapter.setData(it)
                 }
             }
         }
