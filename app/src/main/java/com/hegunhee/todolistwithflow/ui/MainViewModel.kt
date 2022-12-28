@@ -8,10 +8,7 @@ import com.hegunhee.todolistwithflow.data.MemoEntity
 import com.hegunhee.todolistwithflow.domain.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.debounce
-import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -25,12 +22,10 @@ class MainViewModel @Inject constructor(
 
 
 
-    private var _editTextLiveData: MutableLiveData<String> = MutableLiveData("")
-    private val editTextLiveData: LiveData<String>
-        get() = _editTextLiveData
+    val editTextLiveData: MutableStateFlow<String> = MutableStateFlow<String>("")
 
     val memoListLiveData: LiveData<List<MemoEntity>> =
-        editTextLiveData.asFlow().combine(getAllMemoFlowUseCase()) { str, list ->
+        editTextLiveData.combine(getAllMemoFlowUseCase()) { str, list ->
             list.filter { it.text.contains(str) }
         }.asLiveData()
 
@@ -61,10 +56,6 @@ class MainViewModel @Inject constructor(
         deleteMemoUseCase(memo)
     }
 
-
-    fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-        _editTextLiveData.postValue(s.toString())
-    }
 
 
 }
