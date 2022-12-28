@@ -7,4 +7,8 @@
 asLiveData 확장함수가 안되는 이슈  
 https://github.com/hegunhee/TodoListWithFlow/issues/1  
 Flow Combine 사용  
-https://github.com/hegunhee/TodoListWithFlow/issues/2
+https://github.com/hegunhee/TodoListWithFlow/issues/2  
+
+## 완전한 flow로 이전 (LiveData -> Flow, 2022_12_28(수))  
+Room DB에서 flow로 데이터를 받고있지만 정작 presentation layer에서 데이터를 사용하는건  
+flow가 아닌 LiveData이므로 완전한 flow로 전환했습니다.
