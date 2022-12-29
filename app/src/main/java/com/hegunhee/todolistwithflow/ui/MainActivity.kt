@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity() {
 
     private val binding: ActivityMainBinding by lazy { ActivityMainBinding.inflate(layoutInflater) }
     private val viewModel: MainViewModel by viewModels()
-    private val adapter = MemoAdapter(listOf(),
+    private val adapter = MemoAdapter(
         deleteMemo = { memo -> viewModel.deleteMemo(memo) },
         insertMemo = { memo -> viewModel.reverseCheckInsertMemo(memo) }
     )
@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity() {
             }
             launch {
                 memoListLiveData.collect {
-                    adapter.setData(it)
+                    adapter.submitList(it)
                 }
             }
         }
