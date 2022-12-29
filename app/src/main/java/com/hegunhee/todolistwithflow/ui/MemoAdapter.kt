@@ -10,8 +10,7 @@ import com.hegunhee.todolistwithflow.data.MemoEntity
 import com.hegunhee.todolistwithflow.databinding.MemoItemBinding
 
 class MemoAdapter(
-    val deleteMemo: (MemoEntity) -> Unit,
-    val insertMemo : (MemoEntity) -> Unit
+    val eventHandler : MainActivityActionHandler
 ) : ListAdapter<MemoEntity,MemoAdapter.MemoViewHolder>(diffUtil) {
 
     inner class MemoViewHolder(
@@ -19,20 +18,23 @@ class MemoAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bindView(memo: MemoEntity) = with(binding) {
+            memoEntity = memo
             title.text = memo.text
-            deleteButton.setOnClickListener {
-                deleteMemo(memo)
-            }
+//            deleteButton.setOnClickListener {
+//                deleteMemo(memo)
+//            }
             check.visibility = if (memo.isCheck) View.VISIBLE else View.GONE
-            title.setOnClickListener{
-                insertMemo(memo.copy(isCheck = !memo.isCheck))
-            }
+//            title.setOnClickListener{
+//                insertMemo(memo.copy(isCheck = !memo.isCheck))
+//            }
         }
 
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MemoViewHolder {
-        return MemoViewHolder(MemoItemBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+        return MemoViewHolder(MemoItemBinding.inflate(LayoutInflater.from(parent.context), parent, false).apply {
+            eventHandler = this@MemoAdapter.eventHandler
+        })
     }
 
     override fun onBindViewHolder(holder: MemoViewHolder, position: Int) {

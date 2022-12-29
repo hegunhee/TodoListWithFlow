@@ -15,7 +15,7 @@ class MainViewModel @Inject constructor(
     private val insertMemoUseCase: InsertMemoUseCase,
     private val deleteAllMemoUseCase: DeleteAllMemoUseCase,
     private val deleteMemoUseCase: DeleteMemoUseCase,
-) : ViewModel() {
+) : ViewModel(), MainActivityActionHandler {
 
 
 
@@ -35,21 +35,24 @@ class MainViewModel @Inject constructor(
         _event.emit(Unit)
     }
 
-    fun insertMemo(text: String) = viewModelScope.launch(Dispatchers.IO) {
-        insertMemoUseCase(MemoEntity(text, false))
-
+    fun insertMemo(text: String,isClear : Boolean = false) = viewModelScope.launch(Dispatchers.IO) {
+        insertMemoUseCase(MemoEntity(text, isClear))
     }
 
-    fun reverseCheckInsertMemo(memo: MemoEntity) = viewModelScope.launch(Dispatchers.IO) {
-        insertMemoUseCase(memo)
+    override fun toggleMemo(memo: MemoEntity) {
+        viewModelScope.launch(Dispatchers.IO){
+            insertMemoUseCase(memo.copy(isCheck = !memo.isCheck))
+        }
     }
 
     fun deleteAll() = viewModelScope.launch(Dispatchers.IO) {
         deleteAllMemoUseCase()
     }
 
-    fun deleteMemo(memo: MemoEntity) = viewModelScope.launch(Dispatchers.IO) {
-        deleteMemoUseCase(memo)
+    override fun deleteMemo(memo: MemoEntity) {
+        viewModelScope.launch(Dispatchers.IO) {
+            deleteMemoUseCase(memo)
+        }
     }
 
 
