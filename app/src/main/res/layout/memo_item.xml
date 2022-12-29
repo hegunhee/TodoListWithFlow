@@ -11,6 +11,8 @@
         <variable
             name="memoEntity"
             type="com.hegunhee.todolistwithflow.data.MemoEntity" />
+
+        <import type="android.view.View" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -26,6 +28,8 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
+            android:onClick="@{() -> eventHandler.toggleMemo(memoEntity)}"
+            android:text="@{memoEntity.text}"
             android:textSize="30dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/check"
@@ -33,7 +37,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_chainStyle="packed"
-            android:onClick="@{() -> eventHandler.toggleMemo(memoEntity)}"
             tools:text="영어 공부하기" />
 
         <View
@@ -41,26 +44,25 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:background="@drawable/ic_check"
+            android:visibility="@{memoEntity.check ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="@id/title"
             app:layout_constraintEnd_toStartOf="@id/deleteButton"
             app:layout_constraintHorizontal_weight="1"
             app:layout_constraintStart_toEndOf="@id/title"
-            tools:visibility="visible"
-            android:visibility="gone"
-            app:layout_constraintTop_toTopOf="@id/title" />
+            app:layout_constraintTop_toTopOf="@id/title"
+            tools:visibility="visible" />
 
         <ImageButton
             android:id="@+id/deleteButton"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:background="@drawable/ic_delete"
+            android:onClick="@{() -> eventHandler.deleteMemo(memoEntity)}"
             app:layout_constraintBottom_toBottomOf="@id/title"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_weight="1"
             app:layout_constraintStart_toEndOf="@id/check"
             app:layout_constraintTop_toTopOf="@id/title"
-            app:layout_constraintVertical_chainStyle="packed"
-            android:onClick="@{() -> eventHandler.deleteMemo(memoEntity)}"
-            />
+            app:layout_constraintVertical_chainStyle="packed" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
