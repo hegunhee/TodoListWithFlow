@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.Flow
 interface FlowDao{
 
     @Query("SELECT * FROM MemoEntity ORDER BY text")
-    fun getAllMemo() : Flow<List<MemoEntity>>
+    fun getAllMemoList() : Flow<List<MemoEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertMemo(memo : MemoEntity)
