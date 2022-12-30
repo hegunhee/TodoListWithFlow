@@ -1,12 +1,11 @@
 package com.hegunhee.todolistwithflow.model
 
-import android.util.Log
 import com.hegunhee.todolistwithflow.data.MemoEntity
 import com.hegunhee.todolistwithflow.db.FlowDao
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.conflate
+import javax.inject.Inject
 
-class DefaultRepository(private val dao : FlowDao) : Repository{
+class DefaultRepository @Inject constructor(private val dao : FlowDao) : Repository{
 
     override fun getAllMemo(): Flow<List<MemoEntity>> {
         return dao.getAllMemo()
