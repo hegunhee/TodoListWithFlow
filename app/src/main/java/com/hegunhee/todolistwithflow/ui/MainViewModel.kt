@@ -11,7 +11,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val getAllMemoFlowUseCase: GetAllMemoFlowUseCase,
+    private val getAllMemoListFlowUseCase: GetAllMemoListFlowUseCase,
     private val insertMemoUseCase: InsertMemoUseCase,
     private val deleteAllMemoUseCase: DeleteAllMemoUseCase,
     private val deleteMemoUseCase: DeleteMemoUseCase,
@@ -22,7 +22,7 @@ class MainViewModel @Inject constructor(
     val editTextLiveData: MutableStateFlow<String> = MutableStateFlow<String>("")
 
     val memoListLiveData: Flow<List<MemoEntity>> =
-        editTextLiveData.combine(getAllMemoFlowUseCase()) { str, list ->
+        editTextLiveData.combine(getAllMemoListFlowUseCase()) { str, list ->
             list.filter { it.text.contains(str) }
         }.distinctUntilChanged()
 
