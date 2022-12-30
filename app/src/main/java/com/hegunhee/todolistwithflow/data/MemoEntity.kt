@@ -7,6 +7,4 @@ import androidx.room.PrimaryKey
 data class MemoEntity(
     @PrimaryKey val text : String,
     val isCheck : Boolean
-    ) {
-
-}
+)
