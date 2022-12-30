@@ -11,4 +11,5 @@ https://github.com/hegunhee/TodoListWithFlow/issues/2
 
 ## 완전한 flow로 이전 (LiveData -> Flow, 2022_12_28(수))  
 Room DB에서 flow로 데이터를 받고있지만 정작 presentation layer에서 데이터를 사용하는건  
-flow가 아닌 LiveData이므로 완전한 flow로 전환했습니다.
+flow가 아닌 LiveData이므로 완전한 flow로 전환했습니다.  
+사용하는 케이스에따라 Flow, StateFlow, SharedFlow를 사용하였습니다.  
