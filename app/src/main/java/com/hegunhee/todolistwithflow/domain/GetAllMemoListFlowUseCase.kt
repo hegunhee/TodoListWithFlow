@@ -13,6 +13,6 @@ import javax.inject.Inject
 class GetAllMemoListFlowUseCase @Inject constructor(private val repository: Repository): UseCase {
 
     operator fun invoke() : Flow<List<MemoEntity>>{
-        return repository.getAllMemo()
+        return repository.getAllMemoList()
     }
 }

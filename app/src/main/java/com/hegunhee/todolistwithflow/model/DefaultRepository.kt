@@ -7,7 +7,7 @@ import javax.inject.Inject
 
 class DefaultRepository @Inject constructor(private val dao : FlowDao) : Repository{
 
-    override fun getAllMemo(): Flow<List<MemoEntity>> {
+    override fun getAllMemoList(): Flow<List<MemoEntity>> {
         return dao.getAllMemoList()
     }
 

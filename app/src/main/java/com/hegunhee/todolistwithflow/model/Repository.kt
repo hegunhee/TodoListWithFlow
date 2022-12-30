@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface Repository {
 
-    fun getAllMemo() : Flow<List<MemoEntity>>
+    fun getAllMemoList() : Flow<List<MemoEntity>>
 
     suspend fun insertMemo(memo : MemoEntity)
 
