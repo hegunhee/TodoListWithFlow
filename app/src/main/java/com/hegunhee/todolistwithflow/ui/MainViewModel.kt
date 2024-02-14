@@ -29,12 +29,12 @@ class MainViewModel @Inject constructor(
         )
 
 
-    private var _navigationActions: MutableSharedFlow<Unit> = MutableSharedFlow()
-    val navigationActions: SharedFlow<Unit> = _navigationActions.asSharedFlow()
+    private var _navigationActions: MutableSharedFlow<MainNavigationAction> = MutableSharedFlow()
+    val navigationActions: SharedFlow<MainNavigationAction> = _navigationActions.asSharedFlow()
 
 
     fun onAddMemoButtonClick() = viewModelScope.launch{
-        _navigationActions.emit(Unit)
+        _navigationActions.emit(MainNavigationAction.AddMemo)
     }
 
     fun insertMemo(text: String,isClear : Boolean = false) = viewModelScope.launch(Dispatchers.IO) {

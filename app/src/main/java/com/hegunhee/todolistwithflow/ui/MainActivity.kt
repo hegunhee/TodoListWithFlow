@@ -39,7 +39,11 @@ class MainActivity : AppCompatActivity() {
         lifecycleScope.launchWhenStarted {
             launch {
                 navigationActions.collect {
-                    addMemo()
+                    when(it) {
+                        MainNavigationAction.AddMemo -> {
+                            addMemo()
+                        }
+                    }
                 }
             }
             launch {
