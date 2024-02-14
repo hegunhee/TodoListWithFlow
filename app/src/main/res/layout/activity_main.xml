@@ -22,11 +22,11 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
             android:hint="원하시는 정보를 입력해주세요"
-            android:textSize="20dp"
+            android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:text="@={viewmodel.editTextLiveData}"
+            android:text="@={viewmodel.searchQuery}"
 
             />
 
@@ -47,7 +47,7 @@
             android:layout_height="50dp"
             android:layout_marginEnd="30dp"
             android:layout_marginBottom="30dp"
-            android:onClick="@{() -> viewmodel.clickFloatingButton()}"
+            android:onClick="@{() -> viewmodel.onAddMemoButtonClick()}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
 
