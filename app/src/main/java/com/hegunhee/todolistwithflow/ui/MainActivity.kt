@@ -32,10 +32,10 @@ class MainActivity : AppCompatActivity() {
             recyclerView.adapter = adapter
             lifecycleOwner = this@MainActivity
         }
-        initObserve()
+        observeData()
     }
 
-    private fun initObserve() = with(viewModel) {
+    private fun observeData() = with(viewModel) {
         lifecycleScope.launchWhenStarted {
             launch {
                 navigationActions.collect {
