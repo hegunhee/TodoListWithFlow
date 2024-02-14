@@ -9,7 +9,7 @@ import javax.inject.Inject
 
 @InstallIn(SingletonComponent::class)
 @Module
-class InsertMemoUseCase @Inject constructor(private val repository: Repository) : UseCase {
+class InsertMemoUseCase @Inject constructor(private val repository: Repository) {
 
     suspend operator fun invoke(memo : MemoEntity){
         repository.insertMemo(memo)
