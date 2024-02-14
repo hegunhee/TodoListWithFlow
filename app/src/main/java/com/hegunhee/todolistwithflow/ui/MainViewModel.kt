@@ -17,22 +17,24 @@ class MainViewModel @Inject constructor(
     private val deleteMemoUseCase: DeleteMemoUseCase,
 ) : ViewModel(), MainActivityActionHandler {
 
+    val searchQuery: MutableStateFlow<String> = MutableStateFlow<String>("")
 
-
-    val editTextLiveData: MutableStateFlow<String> = MutableStateFlow<String>("")
-
-    val memoListLiveData: Flow<List<MemoEntity>> =
-        editTextLiveData.combine(getAllMemoListFlowUseCase()) { str, list ->
+    val memoList: StateFlow<List<MemoEntity>> =
+        searchQuery.combine(getAllMemoListFlowUseCase()) { str, list ->
             list.filter { it.text.contains(str) }
-        }.distinctUntilChanged()
+        }.stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000L),
+            initialValue = emptyList()
+        )
 
 
-    private var _event: MutableSharedFlow<Unit> = MutableSharedFlow()
-    val event: SharedFlow<Unit> = _event.asSharedFlow()
+    private var _navigationActions: MutableSharedFlow<Unit> = MutableSharedFlow()
+    val navigationActions: SharedFlow<Unit> = _navigationActions.asSharedFlow()
 
 
-    fun clickFloatingButton() = viewModelScope.launch{
-        _event.emit(Unit)
+    fun onAddMemoButtonClick() = viewModelScope.launch{
+        _navigationActions.emit(Unit)
     }
 
     fun insertMemo(text: String,isClear : Boolean = false) = viewModelScope.launch(Dispatchers.IO) {

@@ -38,12 +38,12 @@ class MainActivity : AppCompatActivity() {
     private fun initObserve() = with(viewModel) {
         lifecycleScope.launchWhenStarted {
             launch {
-                event.collect {
+                navigationActions.collect {
                     addMemo()
                 }
             }
             launch {
-                memoListLiveData.collect {
+                memoList.collect {
                     adapter.submitList(it)
                 }
             }
