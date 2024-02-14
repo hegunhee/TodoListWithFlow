@@ -10,7 +10,7 @@ import javax.inject.Inject
 
 @InstallIn(SingletonComponent::class)
 @Module
-class GetAllMemoListFlowUseCase @Inject constructor(private val repository: Repository): UseCase {
+class GetAllMemoListFlowUseCase @Inject constructor(private val repository: Repository) {
 
     operator fun invoke() : Flow<List<MemoEntity>>{
         return repository.getAllMemoList()

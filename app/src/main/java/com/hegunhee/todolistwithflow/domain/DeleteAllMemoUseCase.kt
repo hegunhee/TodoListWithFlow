@@ -8,7 +8,7 @@ import javax.inject.Inject
 
 @InstallIn(SingletonComponent::class)
 @Module
-class DeleteAllMemoUseCase @Inject constructor(private val repository: Repository) : UseCase {
+class DeleteAllMemoUseCase @Inject constructor(private val repository: Repository) {
 
     suspend operator fun invoke(){
         repository.deleteAll()
