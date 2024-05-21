@@ -3,14 +3,14 @@ package com.hegunhee.todolistwithflow.model
 import com.hegunhee.todolistwithflow.data.MemoEntity
 import kotlinx.coroutines.flow.Flow
 
-interface Repository {
+interface MemoRepository {
 
-    fun getAllMemoList() : Flow<List<MemoEntity>>
+    fun getAllMemo() : Flow<List<MemoEntity>>
 
-    suspend fun insertMemo(memo : MemoEntity)
+    suspend fun save(memo : MemoEntity)
 
     suspend fun deleteAll()
 
-    suspend fun deleteMamo(memo : MemoEntity)
+    suspend fun delete(memo : MemoEntity)
 
 }

@@ -5,13 +5,13 @@ import com.hegunhee.todolistwithflow.db.FlowDao
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class DefaultRepository @Inject constructor(private val dao : FlowDao) : Repository{
+class DefaultMemoRepository @Inject constructor(private val dao : FlowDao) : MemoRepository{
 
-    override fun getAllMemoList(): Flow<List<MemoEntity>> {
+    override fun getAllMemo(): Flow<List<MemoEntity>> {
         return dao.getAllMemoList()
     }
 
-    override suspend fun insertMemo(memo: MemoEntity) {
+    override suspend fun save(memo: MemoEntity) {
         dao.insertMemo(memo)
     }
 
@@ -19,7 +19,7 @@ class DefaultRepository @Inject constructor(private val dao : FlowDao) : Reposit
         dao.deleteAll()
     }
 
-    override suspend fun deleteMamo(memo: MemoEntity) {
+    override suspend fun delete(memo: MemoEntity) {
         dao.deleteMemo(memo)
     }
 
