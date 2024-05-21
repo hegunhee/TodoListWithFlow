@@ -11,7 +11,7 @@ import javax.inject.Inject
 @Module
 class InsertMemoUseCase @Inject constructor(private val memoRepository: MemoRepository) {
 
-    suspend operator fun invoke(memo : MemoEntity){
-        memoRepository.save(memo)
+    suspend operator fun invoke(memo : MemoEntity) : Result<Unit> {
+        return memoRepository.save(memo)
     }
 }
