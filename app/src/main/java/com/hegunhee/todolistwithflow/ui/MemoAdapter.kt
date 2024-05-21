@@ -34,9 +34,13 @@ class MemoAdapter(
 }
 
 internal object diffUtil : DiffUtil.ItemCallback<MemoEntity>(){
-    override fun areItemsTheSame(oldItem: MemoEntity, newItem: MemoEntity): Boolean =
-        oldItem.text == newItem.text
+    override fun areItemsTheSame(oldItem: MemoEntity, newItem: MemoEntity): Boolean {
+        return oldItem.text == newItem.text
+    }
 
-    override fun areContentsTheSame(oldItem: MemoEntity, newItem: MemoEntity): Boolean =
-        oldItem == newItem
+
+
+    override fun areContentsTheSame(oldItem: MemoEntity, newItem: MemoEntity): Boolean {
+        return oldItem == newItem
+    }
 }
