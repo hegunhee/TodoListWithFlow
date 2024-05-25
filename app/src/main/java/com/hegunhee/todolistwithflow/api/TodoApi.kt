@@ -5,6 +5,7 @@ import kotlinx.coroutines.flow.Flow
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
+import retrofit2.http.Headers
 import retrofit2.http.PATCH
 import retrofit2.http.POST
 import retrofit2.http.Path
@@ -18,13 +19,13 @@ interface TodoApi {
     suspend fun getMemo(@Path("id") id : String) : MemoEntity
 
     @POST("todo")
-    suspend fun save(@Body todoForm : TodoForm) : String
+    suspend fun save(@Body todoForm : TodoForm) : TodoForm
 
     @PATCH("todo/{id}")
-    suspend fun toggleMemo(@Path("id") id : String) : String
+    suspend fun toggleMemo(@Path("id") id : String) : Unit
 
     @DELETE("todo/{id}")
-    suspend fun deleteTodo(@Path("id") id : String) : String
+    suspend fun deleteTodo(@Path("id") id : String) : Unit
 
     @DELETE("todo")
     suspend fun deleteAllTodo() : Unit

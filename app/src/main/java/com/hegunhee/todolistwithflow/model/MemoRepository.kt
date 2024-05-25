@@ -10,7 +10,7 @@ interface MemoRepository {
 
     suspend fun deleteAll() : Result<Unit>
 
-    suspend fun delete(memoId : String) : Result<String>
+    suspend fun delete(memoId : String) : Result<Unit>
 
-    suspend fun toggleMemo(memoId : String) : Result<String>
+    suspend fun toggleMemo(memoId : String) : Result<Unit>
 }

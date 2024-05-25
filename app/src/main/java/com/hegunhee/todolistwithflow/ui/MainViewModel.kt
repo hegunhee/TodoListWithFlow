@@ -7,7 +7,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import java.lang.IllegalStateException
 import javax.inject.Inject
 
 @HiltViewModel
@@ -51,31 +50,43 @@ class MainViewModel @Inject constructor(
 
     fun insertMemo(memoId: String) = viewModelScope.launch(Dispatchers.IO) {
         insertMemoUseCase(memoId)
-            .onFailure {
-                if(it is IllegalStateException) {
-
-                }
+            .onSuccess {
+                fetchMemo()
             }
-        fetchMemo()
+            .onFailure {
+
+            }
     }
 
     override fun toggleMemo(memoId: String) {
         viewModelScope.launch(Dispatchers.IO){
             toggleMemoUseCase(memoId)
-            fetchMemo()
+                .onSuccess {
+                    fetchMemo()
+                }.onFailure {
+
+                }
         }
     }
 
     fun deleteAll() = viewModelScope.launch(Dispatchers.IO) {
         deleteAllMemoUseCase()
-        fetchMemo()
+            .onSuccess {
+                fetchMemo()
+            }.onFailure {
+
+            }
+
 
     }
 
     override fun deleteMemo(memoId: String) {
         viewModelScope.launch(Dispatchers.IO) {
             deleteMemoUseCase(memoId)
-            fetchMemo()
+                .onSuccess {
+                    fetchMemo()
+                }
+
         }
     }
 
