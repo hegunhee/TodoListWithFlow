@@ -3,6 +3,7 @@ package com.hegunhee.todolistwithflow.ui
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
+
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.hegunhee.todolistwithflow.data.MemoEntity
@@ -31,12 +32,20 @@ class MemoAdapter(
     override fun onBindViewHolder(holder: MemoViewHolder, position: Int) {
         holder.bindView(getItem(position))
     }
-}
 
-internal object diffUtil : DiffUtil.ItemCallback<MemoEntity>(){
-    override fun areItemsTheSame(oldItem: MemoEntity, newItem: MemoEntity): Boolean =
-        oldItem.text == newItem.text
+    companion object {
+        private object diffUtil : DiffUtil.ItemCallback<MemoEntity>() {
 
-    override fun areContentsTheSame(oldItem: MemoEntity, newItem: MemoEntity): Boolean =
-        oldItem == newItem
+            override fun areItemsTheSame(oldItem: MemoEntity, newItem: MemoEntity): Boolean {
+                return oldItem.text == newItem.text
+            }
+
+
+
+            override fun areContentsTheSame(oldItem: MemoEntity, newItem: MemoEntity): Boolean {
+                return oldItem == newItem
+            }
+
+        }
+    }
 }

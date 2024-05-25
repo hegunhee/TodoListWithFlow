@@ -1,17 +1,11 @@
 package com.hegunhee.todolistwithflow.domain
 
-import com.hegunhee.todolistwithflow.data.MemoEntity
-import com.hegunhee.todolistwithflow.model.Repository
-import dagger.Module
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
+import com.hegunhee.todolistwithflow.model.MemoRepository
 import javax.inject.Inject
 
-@InstallIn(SingletonComponent::class)
-@Module
-class DeleteMemoUseCase @Inject constructor(private val repository: Repository) {
+class DeleteMemoUseCase @Inject constructor(private val memoRepository: MemoRepository) {
 
-    suspend operator fun invoke(memo : MemoEntity){
-        repository.deleteMamo(memo)
+    suspend operator fun invoke(memoId : String) : Result<String> {
+        return memoRepository.delete(memoId)
     }
 }

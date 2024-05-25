@@ -1,10 +1,10 @@
 package com.hegunhee.todolistwithflow.data
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
-@Entity
+@Serializable
 data class MemoEntity(
-    @PrimaryKey val text : String,
-    val isCheck : Boolean
+    @SerialName("text")val text : String,
+    @SerialName("isCheck") val isCheck : Boolean
 )

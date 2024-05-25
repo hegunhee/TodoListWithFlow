@@ -1,10 +1,9 @@
 package com.hegunhee.todolistwithflow.ui
 
-import com.hegunhee.todolistwithflow.data.MemoEntity
 
 interface MainActivityActionHandler {
 
-    fun deleteMemo(memo : MemoEntity)
+    fun deleteMemo(memoId : String)
 
-    fun toggleMemo(memo : MemoEntity)
+    fun toggleMemo(memoId : String)
 }

@@ -7,26 +7,38 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import java.lang.IllegalStateException
 import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val getAllMemoListFlowUseCase: GetAllMemoListFlowUseCase,
+    private val getAllMemoListUseCase: GetAllMemoListUseCase,
     private val insertMemoUseCase: InsertMemoUseCase,
     private val deleteAllMemoUseCase: DeleteAllMemoUseCase,
     private val deleteMemoUseCase: DeleteMemoUseCase,
+    private val toggleMemoUseCase: ToggleMemoUseCase
 ) : ViewModel(), MainActivityActionHandler {
 
     val searchQuery: MutableStateFlow<String> = MutableStateFlow<String>("")
 
-    val memoList: StateFlow<List<MemoEntity>> =
-        searchQuery.combine(getAllMemoListFlowUseCase()) { str, list ->
-            list.filter { it.text.contains(str) }
-        }.stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5000L),
-            initialValue = emptyList()
-        )
+    private val _memoList : MutableStateFlow<List<MemoEntity>> = MutableStateFlow(emptyList())
+    val memoList: StateFlow<List<MemoEntity>> = _memoList.asStateFlow()
+
+    init {
+        viewModelScope.launch(Dispatchers.IO) {
+            searchQuery.collect { query ->
+                getAllMemoListUseCase().onSuccess { result ->
+                    if(query != "") {
+                        _memoList.value = result.filter {
+                            it.text.contains(query)
+                        }
+                    }else {
+                        _memoList.value = result
+                    }
+                }
+            }
+        }
+    }
 
 
     private var _navigationActions: MutableSharedFlow<MainNavigationAction> = MutableSharedFlow()
@@ -37,26 +49,42 @@ class MainViewModel @Inject constructor(
         _navigationActions.emit(MainNavigationAction.AddMemo)
     }
 
-    fun insertMemo(text: String,isClear : Boolean = false) = viewModelScope.launch(Dispatchers.IO) {
-        insertMemoUseCase(MemoEntity(text, isClear))
+    fun insertMemo(memoId: String) = viewModelScope.launch(Dispatchers.IO) {
+        insertMemoUseCase(memoId)
+            .onFailure {
+                if(it is IllegalStateException) {
+
+                }
+            }
+        fetchMemo()
     }
 
-    override fun toggleMemo(memo: MemoEntity) {
+    override fun toggleMemo(memoId: String) {
         viewModelScope.launch(Dispatchers.IO){
-            insertMemoUseCase(memo.copy(isCheck = !memo.isCheck))
+            toggleMemoUseCase(memoId)
+            fetchMemo()
         }
     }
 
     fun deleteAll() = viewModelScope.launch(Dispatchers.IO) {
         deleteAllMemoUseCase()
+        fetchMemo()
+
     }
 
-    override fun deleteMemo(memo: MemoEntity) {
+    override fun deleteMemo(memoId: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            deleteMemoUseCase(memo)
+            deleteMemoUseCase(memoId)
+            fetchMemo()
         }
     }
 
+    private suspend fun fetchMemo() {
+        getAllMemoListUseCase()
+            .onSuccess { result ->
+                _memoList.value = result
+            }.onFailure {
 
-
+            }
+    }
 }
