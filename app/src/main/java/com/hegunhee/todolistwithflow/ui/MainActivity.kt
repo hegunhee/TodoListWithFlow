@@ -13,7 +13,6 @@ import androidx.lifecycle.lifecycleScope
 import com.hegunhee.todolistwithflow.R
 import com.hegunhee.todolistwithflow.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
