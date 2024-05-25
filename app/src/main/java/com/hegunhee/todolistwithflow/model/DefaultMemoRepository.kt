@@ -14,9 +14,7 @@ class DefaultMemoRepository @Inject constructor(
     }
 
     override suspend fun save(memoId : String): Result<String> {
-        return runCatching {
-            todoApi.save(memoId.toForm())
-        }
+        return runCatching {  todoApi.save(memoId.toForm()).todoId }
     }
 
     override suspend fun deleteAll(): Result<Unit> {
@@ -25,13 +23,13 @@ class DefaultMemoRepository @Inject constructor(
         }
     }
 
-    override suspend fun delete(memoId : String): Result<String> {
+    override suspend fun delete(memoId : String): Result<Unit> {
         return runCatching {
             todoApi.deleteTodo(memoId)
         }
     }
 
-    override suspend fun toggleMemo(memoId: String): Result<String> {
+    override suspend fun toggleMemo(memoId: String): Result<Unit> {
         return runCatching {
             todoApi.toggleMemo(memoId)
         }
@@ -39,5 +37,5 @@ class DefaultMemoRepository @Inject constructor(
 }
 
 private fun String.toForm() : TodoForm {
-    return TodoForm(this)
+    return TodoForm( this )
 }

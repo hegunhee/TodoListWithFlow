@@ -7,7 +7,7 @@ class ToggleMemoUseCase @Inject constructor(
     private val repository: MemoRepository
 ){
 
-    suspend operator fun invoke(memoId: String) : Result<String> {
+    suspend operator fun invoke(memoId: String) : Result<Unit> {
         return repository.toggleMemo(memoId)
     }
 }

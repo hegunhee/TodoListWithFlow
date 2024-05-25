@@ -5,7 +5,7 @@ import javax.inject.Inject
 
 class InsertMemoUseCase @Inject constructor(private val memoRepository: MemoRepository) {
 
-    suspend operator fun invoke(memoId : String) : Result<String> {
+    suspend operator fun invoke(memoId : String) :Result<String>{
         return memoRepository.save(memoId)
     }
 }
