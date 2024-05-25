@@ -11,16 +11,28 @@ class DefaultMemoRepository @Inject constructor(private val dao: FlowDao) : Memo
         return dao.getAllMemoList()
     }
 
-    override suspend fun save(memo: MemoEntity): Result<Unit> {
-        return runCatching { dao.insertMemo(memo) }
+    override suspend fun save(memo: MemoEntity): Result<String> {
+        return runCatching {
+            dao.insertMemo(memo)
+            memo.text
+        }
     }
 
     override suspend fun deleteAll(): Result<Unit> {
         return runCatching { dao.deleteAll() }
     }
 
-    override suspend fun delete(memo: MemoEntity): Result<Unit> {
-        return runCatching { dao.deleteMemo(memo) }
+    override suspend fun delete(memo: MemoEntity): Result<String> {
+        return runCatching {
+            dao.deleteMemo(memo)
+            memo.text
+        }
+    }
+
+    override suspend fun toggleMemo(memoId: String): Result<String> {
+        return runCatching {
+            memoId
+        }
     }
 
 }

@@ -7,10 +7,11 @@ interface MemoRepository {
 
     fun getAllMemo() : Flow<List<MemoEntity>>
 
-    suspend fun save(memo : MemoEntity) : Result<Unit>
+    suspend fun save(memo : MemoEntity) : Result<String>
 
     suspend fun deleteAll() : Result<Unit>
 
-    suspend fun delete(memo : MemoEntity) : Result<Unit>
+    suspend fun delete(memo : MemoEntity) : Result<String>
 
+    suspend fun toggleMemo(memoId : String) : Result<String>
 }
