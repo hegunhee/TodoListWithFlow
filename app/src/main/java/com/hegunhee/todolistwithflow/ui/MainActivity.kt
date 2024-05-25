@@ -9,7 +9,9 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.hegunhee.todolistwithflow.R
 import com.hegunhee.todolistwithflow.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -35,19 +37,21 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun observeData() = with(viewModel) {
-        lifecycleScope.launchWhenStarted {
-            launch {
-                navigationActions.collect {
-                    when(it) {
-                        MainNavigationAction.AddMemo -> {
-                            addMemo()
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                launch {
+                    navigationActions.collect {
+                        when(it) {
+                            MainNavigationAction.AddMemo -> {
+                                addMemo()
+                            }
                         }
                     }
                 }
-            }
-            launch {
-                memoList.collect {
-                    adapter.submitList(it)
+                launch {
+                    memoList.collect {
+                        adapter.submitList(it)
+                    }
                 }
             }
         }
