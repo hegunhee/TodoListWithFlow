@@ -53,6 +53,11 @@ class MainActivity : AppCompatActivity() {
                         adapter.submitList(it)
                     }
                 }
+                launch {
+                    toastMessage.collect { message ->
+                        Toast.makeText(this@MainActivity, message,Toast.LENGTH_SHORT).show()
+                    }
+                }
             }
         }
     }

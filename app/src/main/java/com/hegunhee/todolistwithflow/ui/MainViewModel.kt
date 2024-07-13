@@ -7,6 +7,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import java.lang.IllegalArgumentException
 import javax.inject.Inject
 
 @HiltViewModel
@@ -22,6 +23,9 @@ class MainViewModel @Inject constructor(
 
     private val _memoList : MutableStateFlow<List<MemoEntity>> = MutableStateFlow(emptyList())
     val memoList: StateFlow<List<MemoEntity>> = _memoList.asStateFlow()
+
+    private val _toastMessage: MutableSharedFlow<String> = MutableSharedFlow()
+    val toastMessage : SharedFlow<String> = _toastMessage.asSharedFlow()
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
@@ -54,7 +58,11 @@ class MainViewModel @Inject constructor(
                 fetchMemo()
             }
             .onFailure {
-
+                if(it is IllegalArgumentException) {
+                    it.message?.let {  errorMessage ->
+                        _toastMessage.emit(errorMessage)
+                    }
+                }
             }
     }
 
